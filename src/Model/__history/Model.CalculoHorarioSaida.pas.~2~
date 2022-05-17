@@ -1,0 +1,52 @@
+unit Model.CalculoHorarioSaida;
+
+interface
+
+uses
+  System.SysUtils;
+
+type
+  TCalculoHorarioSaida = class
+    private
+      FHoraInicio,
+      FHoraInicioAlmoco,
+      FHoraFimAlmoco,
+      FTempoExpediente : String;
+    public
+      property HoraInicio: String read FHoraInicio write FHoraInicio;
+      property HoraInicioAlmoco: String read FHoraInicioAlmoco write FHoraInicioAlmoco;
+      property HoraFimAlmoco: String read FHoraFimAlmoco write FHoraFimAlmoco;
+      property TempoExpediente: String read FTempoExpediente write FTempoExpediente;
+      function CalculaHoraSaida : String;
+      function ValidaCampos : Boolean;
+
+  end;
+
+implementation
+
+{ TCalculoHorarioSaida }
+
+function TCalculoHorarioSaida.CalculaHoraSaida: String;
+var
+  lTempoExpediente,
+  lInicio,
+  lInicioAlmoco,
+  lRetornoAlmoco: TDateTime;
+begin
+   lInicio := StrTotime(FHoraInicio);
+   lInicioAlmoco := StrTotime(FHoraInicioAlmoco);
+   lRetornoAlmoco := StrTotime(FHoraFimAlmoco);
+   lTempoExpediente := StrTotime(FTempoExpediente);
+
+   Result := TimeToStr(lRetornoAlmoco +  (lTempoExpediente - (lInicioAlmoco - lInicio)));
+end;
+
+function TCalculoHorarioSaida.ValidaCampos: Boolean;
+begin
+  if (FHoraInicio = '') or (FHoraInicioAlmoco = '') or (FHoraFimAlmoco = '') or (FTempoExpediente = '') then
+    Result := false
+  else
+    Result := true;
+end;
+
+end.

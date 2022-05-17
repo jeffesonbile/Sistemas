@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/01/06 10:02:55.000.314,=C:\Users\DSNERP\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/04/05 23:35:44.000.443,=C:\Users\DSNERP\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/04/05 23:37:48.000.089,C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\view\DelphiToHero.Vew.Main.dfm=C:\Users\DSNERP\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2022/04/05 23:37:48.000.089,C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\view\DelphiToHero.Vew.Main.pas=C:\Users\DSNERP\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/04/05 23:38:05.000.351,C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\DelphiToHero.dproj=C:\Users\DSNERP\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2022/04/06 00:01:09.000.162,=C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\Unit1.pas</Transaction>
+    <Transaction>2022/04/06 00:02:32.000.732,C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\Unit1.pas=C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\view\Styles\DelphiToHero.View.Styles.Colors.pas</Transaction>
+    <Transaction>2022/04/06 00:25:58.000.727,=C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\Unit1.pas</Transaction>
+    <Transaction>2022/04/06 00:26:45.000.726,C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\Unit1.dfm=C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\view\Pages\DelphiToHero.Vew.Pages.Principal.dfm</Transaction>
+    <Transaction>2022/04/06 00:26:45.000.726,C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\Unit1.pas=C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\view\Pages\DelphiToHero.Vew.Pages.Principal.pas</Transaction>
+    <Transaction>2022/04/06 00:30:30.000.415,=C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\Unit1.pas</Transaction>
+    <Transaction>2022/04/06 00:30:53.000.805,C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\Unit1.dfm=C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\view\Pages\DelphiToHero.Vew.PagesUsuarios.dfm</Transaction>
+    <Transaction>2022/04/06 00:30:53.000.805,C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\Unit1.pas=C:\Uteis\Estudos_Delphi\DelphiToHero\ClientVCL\src\view\Pages\DelphiToHero.Vew.PagesUsuarios.pas</Transaction>
+  </Transactions>
+</BorlandProject>

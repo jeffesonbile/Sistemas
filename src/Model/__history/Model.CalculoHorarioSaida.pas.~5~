@@ -1,0 +1,93 @@
+unit Model.CalculoHorarioSaida;
+
+interface
+
+uses
+  System.SysUtils;
+
+type
+  TCalculoHorarioSaida = class
+    private
+      FHoraInicio,
+      FHoraInicioAlmoco,
+      FHoraFimAlmoco,
+      FTempoExpediente : String;
+    public
+      property HoraInicio: String read FHoraInicio write FHoraInicio;
+      property HoraInicioAlmoco: String read FHoraInicioAlmoco write FHoraInicioAlmoco;
+      property HoraFimAlmoco: String read FHoraFimAlmoco write FHoraFimAlmoco;
+      property TempoExpediente: String read FTempoExpediente write FTempoExpediente;
+      function CalculaHoraSaida : String;
+      function ValidaCampos : Integer;
+
+  end;
+
+implementation
+
+{ TCalculoHorarioSaida }
+
+function TCalculoHorarioSaida.CalculaHoraSaida: String;
+var
+  lTempoExpediente,
+  lInicio,
+  lInicioAlmoco,
+  lRetornoAlmoco: TDateTime;
+begin
+   lInicio := StrTotime(FHoraInicio);
+   lInicioAlmoco := StrTotime(FHoraInicioAlmoco);
+   lRetornoAlmoco := StrTotime(FHoraFimAlmoco);
+   lTempoExpediente := StrTotime(FTempoExpediente);
+
+   Result := TimeToStr(lRetornoAlmoco +  (lTempoExpediente - (lInicioAlmoco - lInicio)));
+end;
+
+function TCalculoHorarioSaida.ValidaCampos: Integer;
+var
+  i : Integer;
+  lFHoraInicio,
+  lHoraInicioAlmoco,
+  lHoraFimAlmoco : TTime;
+begin
+  try
+    i := 1;
+    StrToTime(TempoExpediente);
+
+    i := 2;
+    StrToTime(FHoraInicio);
+
+    i := 3;
+    StrToTime(HoraInicioAlmoco);
+
+    i := 4;
+    StrToTime(HoraFimAlmoco);
+
+    lFHoraInicio := StrToTime(FHoraInicio);
+    lHoraInicioAlmoco := StrToTime(HoraInicioAlmoco);
+    lHoraFimAlmoco:= StrToTime(HoraFimAlmoco);
+
+    if lFHoraInicio > lHoraInicioAlmoco then
+      i := 5
+    else if lHoraInicioAlmoco >  lHoraFimAlmoco then
+      i := 6
+    else
+      i := 0; // se chegou aqui não deu erro
+
+    Result := i;
+  except
+    Result := i;
+    {
+      Lista de erros:
+      1: 'Verifique o preenchimento do tempo de expediente';
+      2: 'Verifique o preenchimento do horário de entrada';
+      3: 'Verifique o preenchimento do hoário de inicial do almoço';
+      4: 'Verifique o preenchimento do horário final de almoço';
+      5: 'O horário de incio de almoço não pode ser maior que o horário de entrada';
+      6: 'O horário de final de almoço não pode ser maior que o horário de inicio de almoço';
+      }
+
+
+  end;
+
+end;
+
+end.

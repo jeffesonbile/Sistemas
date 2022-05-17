@@ -1,0 +1,23 @@
+program Sistemas;
+
+uses
+  Vcl.Forms,
+  Vew.Main in 'view\Vew.Main.pas' {frmPrincipal},
+  View.Styles.Colors in 'view\Styles\View.Styles.Colors.pas',
+  View.Pages.Principal in 'view\Pages\View.Pages.Principal.pas' {PagePrincipal},
+  View.Routers in 'view\Routers\View.Routers.pas',
+  View.Pages.Form.Template in 'view\Pages\View.Pages.Form.Template.pas' {FormTemplate},
+  View.Pages.Usuarios in'view\Pages\View.Pages.Usuarios.pas' {PageUsuarios};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  ReportMemoryLeaksOnShutdown := True;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  Application.CreateForm(TFormTemplate, FormTemplate);
+  Application.CreateForm(TPageUsuarios, PageUsuarios);
+  Application.CreateForm(TPageUsuarios, PageUsuarios);
+  Application.Run;
+end.

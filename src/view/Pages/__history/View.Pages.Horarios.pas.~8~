@@ -1,0 +1,114 @@
+unit View.Pages.Horarios;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, View.Pages.Form.Template, Vcl.Buttons, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask;
+
+type
+  TPageHorarios = class(TFormTemplate)
+    lblExpediente: TLabel;
+    lblHorarioEntrada: TLabel;
+    Panel5: TPanel;
+    edtTempoExpediente: TMaskEdit;
+    lblInicioAlmolco: TLabel;
+    lblFinalAlmoco: TLabel;
+    edtHoraInicio: TMaskEdit;
+    edtHoraSaidaAlmoco: TMaskEdit;
+    edtHoraRetornoAlmoco: TMaskEdit;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    lblTituloResultado: TLabel;
+    lblResultado: TLabel;
+    btnCalcular: TSpeedButton;
+    procedure FormCreate(Sender: TObject);
+    procedure btnCalcularClick(Sender: TObject);
+
+  private
+    { Private declarations }
+    procedure ApplyStyle;
+    procedure CalcularHorarioSaida;
+  public
+    { Public declarations }
+  end;
+
+var
+  PageHorarios: TPageHorarios;
+
+implementation
+
+{$R *.dfm}
+
+uses
+  View.Styles.Colors,
+  Model.CalculoHorarioSaida;
+
+
+procedure TPageHorarios.ApplyStyle;
+begin
+  lblExpediente.Font.Size := FONT_H7;
+  lblExpediente.Font.Color := FONT_COLOR3;
+  lblExpediente.Font.Name := 'Segoe UI';
+
+  lblHorarioEntrada.Font.Size := FONT_H7;
+  lblHorarioEntrada.Font.Color := FONT_COLOR3;
+  lblHorarioEntrada.Font.Name := 'Segoe UI';
+
+  lblInicioAlmolco.Font.Size := FONT_H7;
+  lblInicioAlmolco.Font.Color := FONT_COLOR3;
+  lblInicioAlmolco.Font.Name := 'Segoe UI';
+
+  lblFinalAlmoco.Font.Size := FONT_H7;
+  lblFinalAlmoco.Font.Color := FONT_COLOR3;
+  lblFinalAlmoco.Font.Name := 'Segoe UI';
+end;
+
+procedure TPageHorarios.btnCalcularClick(Sender: TObject);
+begin
+  inherited;
+  CalcularHorarioSaida;
+end;
+
+procedure TPageHorarios.CalcularHorarioSaida;
+var
+  calculos: TCalculoHorarioSaida;
+  lMensagem : PWideChar;
+begin
+  calculos := TCalculoHorarioSaida.Create;
+  try
+    calculos.HoraInicio := edtHoraInicio.Text;
+    calculos.HoraInicioAlmoco := edtHoraSaidaAlmoco.Text;
+    calculos.HoraFimAlmoco := edtHoraRetornoAlmoco.Text;
+    calculos.TempoExpediente := edtTempoExpediente.Text;
+    if calculos.ValidaCampos = '' then
+    begin
+      lblTituloResultado.Font.Size := FONT_H1;
+      lblTituloResultado.Font.Color := FONT_COLOR3;
+      lblTituloResultado.Font.Name := 'Segoe UI';
+      lblTituloResultado.Caption := 'O Seu horário de saída é:';
+
+      lblResultado.Font.Size := FONT_H1_PLUS;
+      lblResultado.Font.Color := COLOR_BACKGROUND_DESTAK;
+      lblResultado.Font.Name := 'Segoe UI';
+      lblResultado.Caption := calculos.CalculaHoraSaida;
+    end
+    else
+    begin
+      lMensagem := Pchar(calculos.ValidaCampos);
+      Application.MessageBox(lMensagem, 'Atenção', MB_ICONEXCLAMATION + MB_OK);
+    end;
+  finally
+    calculos.Free;
+  end;
+end;
+
+procedure TPageHorarios.FormCreate(Sender: TObject);
+begin
+  inherited;
+  lblTitulo.Caption := 'Calcular Horario de saída:';
+  ApplyStyle;
+
+end;
+
+end.

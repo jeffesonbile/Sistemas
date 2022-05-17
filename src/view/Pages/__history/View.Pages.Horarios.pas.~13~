@@ -1,0 +1,175 @@
+unit View.Pages.Horarios;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, View.Pages.Form.Template, Vcl.Buttons, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask;
+
+type
+  TPageHorarios = class(TFormTemplate)
+    lblExpediente: TLabel;
+    lblHorarioEntrada: TLabel;
+    Panel5: TPanel;
+    edtTempoExpediente: TMaskEdit;
+    lblInicioAlmolco: TLabel;
+    lblFinalAlmoco: TLabel;
+    edtHoraInicio: TMaskEdit;
+    edtHoraSaidaAlmoco: TMaskEdit;
+    edtHoraRetornoAlmoco: TMaskEdit;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    lblTituloResultado: TLabel;
+    lblResultado: TLabel;
+    btnCalcular: TSpeedButton;
+    procedure FormCreate(Sender: TObject);
+    procedure btnCalcularClick(Sender: TObject);
+
+  private
+    { Private declarations }
+    procedure ApplyStyle;
+    procedure ApplyStyleBordasArredondadas(Control: TWinControl);
+    procedure CalcularHorarioSaida;
+    procedure LimparResultado;
+  public
+    { Public declarations }
+  end;
+
+var
+  PageHorarios: TPageHorarios;
+
+implementation
+
+{$R *.dfm}
+
+uses
+  View.Styles.Colors,
+  Model.CalculoHorarioSaida;
+
+
+procedure TPageHorarios.ApplyStyle;
+begin
+  lblExpediente.Font.Size := FONT_H7;
+  lblExpediente.Font.Color := FONT_COLOR3;
+  lblExpediente.Font.Name := 'Segoe UI';
+
+  lblHorarioEntrada.Font.Size := FONT_H7;
+  lblHorarioEntrada.Font.Color := FONT_COLOR3;
+  lblHorarioEntrada.Font.Name := 'Segoe UI';
+
+  lblInicioAlmolco.Font.Size := FONT_H7;
+  lblInicioAlmolco.Font.Color := FONT_COLOR3;
+  lblInicioAlmolco.Font.Name := 'Segoe UI';
+
+  lblFinalAlmoco.Font.Size := FONT_H7;
+  lblFinalAlmoco.Font.Color := FONT_COLOR3;
+  lblFinalAlmoco.Font.Name := 'Segoe UI';
+
+  ApplyStyleBordasArredondadas(Panel5);
+end;
+
+procedure TPageHorarios.ApplyStyleBordasArredondadas(Control: TWinControl);
+var
+  R: TRect;
+  Rgn: HRGN;
+begin
+  with Control do
+  begin
+    R := ClientRect;
+    rgn := CreateRoundRectRgn(R.Left, R.Top, R.Right, R.Bottom, 20, 20);
+    Perform(EM_GETRECT, 0, lParam(@r));
+    InflateRect(r, - 5, - 5);
+    Perform(EM_SETRECTNP, 0, lParam(@r));
+    SetWindowRgn(Handle, rgn, True);
+    Invalidate;
+  end;
+end;
+
+procedure TPageHorarios.btnCalcularClick(Sender: TObject);
+begin
+  inherited;
+  CalcularHorarioSaida;
+end;
+
+procedure TPageHorarios.CalcularHorarioSaida;
+var
+  calculos: TCalculoHorarioSaida;
+  lMensagem : PWideChar;
+begin
+  calculos := TCalculoHorarioSaida.Create;
+  try
+    calculos.HoraInicio := edtHoraInicio.Text;
+    calculos.HoraInicioAlmoco := edtHoraSaidaAlmoco.Text;
+    calculos.HoraFimAlmoco := edtHoraRetornoAlmoco.Text;
+    calculos.TempoExpediente := edtTempoExpediente.Text;
+
+    case calculos.ValidaCampos of
+      0:
+        begin
+           lblTituloResultado.Font.Size := FONT_H1;
+           lblTituloResultado.Font.Color := FONT_COLOR3;
+           lblTituloResultado.Font.Name := 'Segoe UI';
+           lblTituloResultado.Caption := 'O Seu horário de saída é:';
+
+           lblResultado.Font.Size := FONT_H1_PLUS;
+           lblResultado.Font.Color := COLOR_BACKGROUND_DESTAK;
+           lblResultado.Font.Name := 'Segoe UI';
+           lblResultado.Caption := calculos.CalculaHoraSaida;
+         end;
+      1:
+        begin
+          LimparResultado;
+          Application.MessageBox('Verifique o preenchimento do tempo de expediente', 'Atenção', MB_ICONEXCLAMATION + MB_OK);
+          edtTempoExpediente.SetFocus;
+        end;
+      2:
+        begin
+          LimparResultado;
+          Application.MessageBox('Verifique o preenchimento do horário de entrada', 'Atenção', MB_ICONEXCLAMATION + MB_OK);
+          edtHoraInicio.SetFocus;
+        end;
+      3:
+        begin
+          LimparResultado;
+          Application.MessageBox('Verifique o preenchimento do hoário de inicial do almoço', 'Atenção', MB_ICONEXCLAMATION + MB_OK);
+          edtHoraSaidaAlmoco.SetFocus;
+        end;
+      4:
+        begin
+          LimparResultado;
+          Application.MessageBox('Verifique o preenchimento do horário final de almoço', 'Atenção', MB_ICONEXCLAMATION + MB_OK);
+          edtHoraRetornoAlmoco.SetFocus;
+        end;
+      5:
+        begin
+          LimparResultado;
+          Application.MessageBox('O horário de incio de almoço não pode ser maior que o horário de entrada', 'Atenção', MB_ICONEXCLAMATION + MB_OK);
+          edtHoraSaidaAlmoco.SetFocus;
+        end;
+      6:
+        begin
+          LimparResultado;
+          Application.MessageBox('O horário de final de almoço não pode ser maior que o horário de inicio de almoço', 'Atenção', MB_ICONEXCLAMATION + MB_OK);
+          edtHoraRetornoAlmoco.SetFocus;
+        end;
+    end;
+  finally
+    calculos.Free;
+  end;
+end;
+
+procedure TPageHorarios.FormCreate(Sender: TObject);
+begin
+  inherited;
+  lblTitulo.Caption := 'Calcular Horario de saída:';
+  ApplyStyle;
+
+end;
+
+procedure TPageHorarios.LimparResultado;
+begin
+  lblTituloResultado.Caption := '';
+  lblResultado.Caption := '';
+end;
+
+end.

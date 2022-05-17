@@ -1,0 +1,20 @@
+program DelphiToHero;
+
+uses
+  Vcl.Forms,
+  DelphiToHero.Vew.Main in 'view\DelphiToHero.Vew.Main.pas' {frmPrincipal},
+  DelphiToHero.View.Styles.Colors in 'view\Styles\DelphiToHero.View.Styles.Colors.pas',
+  DelphiToHero.Vew.Pages.Principal in 'view\Pages\DelphiToHero.Vew.Pages.Principal.pas' {PagePrincipal},
+  DelphiToHero.View.Routers in 'view\Routers\DelphiToHero.View.Routers.pas',
+  DelphiToHero.Vew.Pages.Form.Template in 'view\Pages\DelphiToHero.Vew.Pages.Form.Template.pas' {FormTemplate};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  ReportMemoryLeaksOnShutdown := True;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  Application.CreateForm(TFormTemplate, FormTemplate);
+  Application.Run;
+end.
